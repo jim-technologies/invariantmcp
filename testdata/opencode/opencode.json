@@ -1,0 +1,20 @@
+{
+  // OpenCode config with MCP servers
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "enabled": true,
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxx"
+      }
+    },
+    /* This server is disabled */
+    "disabled-server": {
+      "type": "local",
+      "command": ["some-server"],
+      "enabled": false
+    }
+  }
+}

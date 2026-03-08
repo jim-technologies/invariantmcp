@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package mcpconfig.v1;
+
+option go_package = "github.com/jim-technologies/invariantmcp/mcpconfig/v1;mcpconfigv1";
+
+// ConfigService translates MCP server configurations between AI clients.
+//
+// Converts config files between Cursor (JSON), Claude Desktop (JSON),
+// Codex (TOML), and OpenCode (JSONC) formats. The client format is
+// inferred from the file path.
+service ConfigService {
+
+  // Convert MCP server configurations from one AI client format to another.
+  //
+  // Reads the source config file, detects the format from the file path,
+  // translates through a universal IR, and writes the target config file
+  // in the format inferred from the output path.
+  //
+  // Examples:
+  //   {"in": "~/.cursor/mcp.json", "out": "~/.codex/config.toml"}
+  //   {"in": ".cursor/mcp.json", "out": ".claude/claude_desktop_config.json"}
+  rpc Convert(ConvertRequest) returns (ConvertResponse);
+}
+
+message ConvertRequest {
+  // Source config file path. Format is inferred from the path.
+  string in = 1;
+
+  // Target config file path. Format is inferred from the path.
+  string out = 2;
+}
+
+message ConvertResponse {
+  // Number of servers converted.
+  int32 server_count = 1;
+
+  // The file path where the target config was written.
+  string path = 2;
+
+  // Human-readable summary of the conversion.
+  string message = 3;
+}
