@@ -12,6 +12,7 @@ Every AI client has its own MCP config format:
 |--------|--------|------|
 | Cursor | JSON | `mcp.json` |
 | Claude Desktop | JSON | `claude_desktop_config.json` |
+| Claude Code | JSON | `.mcp.json` |
 | Codex | TOML | `.codex/config.toml` |
 | OpenCode | JSONC | `opencode.json` |
 | Cline | JSON | `cline_mcp_settings.json` |
@@ -22,7 +23,7 @@ Same servers, different files, different schemas. Add an MCP server and you're c
 
 One RPC: **Convert**. Two fields: **in** and **out**.
 
-The client format is inferred from the file path. `mcp.json` means Cursor, `claude_desktop_config.json` means Claude, `.codex/config.toml` means Codex, `opencode.json` means OpenCode, `cline_mcp_settings.json` means Cline.
+The client format is inferred from the file path. `mcp.json` means Cursor, `claude_desktop_config.json` means Claude Desktop, `.mcp.json` means Claude Code, `.codex/config.toml` means Codex, `opencode.json` means OpenCode, `cline_mcp_settings.json` means Cline.
 
 ```
 source file ── parse ── IR (Go struct) ── serialize ── target file
@@ -54,6 +55,9 @@ invariantmcp --cli ConfigService Convert -r '{"in":"~/.cursor/mcp.json","out":"~
 
 # Claude Desktop → Cursor
 invariantmcp --cli ConfigService Convert -r '{"in":"~/Library/Application Support/Claude/claude_desktop_config.json","out":"~/.cursor/mcp.json"}'
+
+# Claude Code → Codex
+invariantmcp --cli ConfigService Convert -r '{"in":"./.mcp.json","out":"./.codex/config.toml"}'
 
 # Project-level
 invariantmcp --cli ConfigService Convert -r '{"in":".cursor/mcp.json","out":".claude/claude_desktop_config.json"}'
@@ -133,6 +137,7 @@ Output (`~/.codex/config.toml`):
 |--------|--------|-------------|--------------|-------|
 | Cursor | JSON | `mcp.json` | `~/.cursor/mcp.json` | |
 | Claude Desktop | JSON | `claude_desktop_config.json` | `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS), `~/.config/claude/claude_desktop_config.json` (Linux) | |
+| Claude Code | JSON | `.mcp.json` | `.mcp.json` | Preserves `${VAR}` strings for Claude Code to expand at runtime |
 | Codex | TOML | `.codex/config.toml` | `~/.codex/config.toml` | Preserves `env_vars` pass-through |
 | OpenCode | JSONC | `opencode.json` | `~/.config/opencode/opencode.json` | Strips comments on import, skips disabled servers |
 | Cline | JSON | `cline_mcp_settings.json` | `~/.config/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json` | Skips disabled servers, maps SSE transport |
@@ -145,7 +150,6 @@ These clients have MCP config support but don't have adapters yet. PRs welcome.
 |--------|--------|------|-------|
 | Windsurf | JSON | `~/.codeium/windsurf/mcp_config.json` | Same `mcpServers` schema as Cursor |
 | Roo Code | JSON | `.roo/mcp.json` (project), `mcp_settings.json` (global) | Cline fork, similar schema |
-| Claude Code | JSON | `.mcp.json` | Same `mcpServers` schema, supports `${VAR}` expansion |
 | VS Code Copilot | JSON | `.vscode/mcp.json` | Uses `"servers"` key instead of `"mcpServers"` |
 | Zed | JSON | `~/.config/zed/settings.json` | Uses `"context_servers"` key, requires `"source": "custom"` |
 | Continue | YAML | `~/.continue/config.yaml` | YAML format, uses array instead of map |

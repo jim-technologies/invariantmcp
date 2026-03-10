@@ -49,6 +49,7 @@ func matchDirAndBase(path, dir, base string) bool {
 func init() {
 	registerAdapter(&cursorAdapter{})
 	registerAdapter(&claudeAdapter{})
+	registerAdapter(&claudeCodeAdapter{})
 	registerAdapter(&codexAdapter{})
 	registerAdapter(&opencodeAdapter{})
 	registerAdapter(&clineAdapter{})

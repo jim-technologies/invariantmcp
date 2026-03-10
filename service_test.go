@@ -47,6 +47,12 @@ func TestConvert(t *testing.T) {
 			out:  "cline_mcp_settings.json",
 			want: "",
 		},
+		{
+			name: "claude code to codex",
+			in:   "claudecode/.mcp.json",
+			out:  ".codex/config.toml",
+			want: "claudecode/.codex/config.toml",
+		},
 	}
 
 	svc := &ConfigService{}
@@ -108,6 +114,8 @@ func TestAdapterForPath(t *testing.T) {
 		{"/home/user/project/mcp.json", "cursor"},
 		{"~/Library/Application Support/Claude/claude_desktop_config.json", "claude"},
 		{"/home/user/.config/claude/claude_desktop_config.json", "claude"},
+		{"./.mcp.json", "claudecode"},
+		{"/home/user/project/.mcp.json", "claudecode"},
 		{"/home/user/.codex/config.toml", "codex"},
 		{"/home/user/.config/opencode/opencode.json", "opencode"},
 		{"/home/user/.config/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json", "cline"},

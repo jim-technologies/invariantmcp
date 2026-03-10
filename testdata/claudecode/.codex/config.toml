@@ -1,0 +1,9 @@
+[mcp_servers]
+  [mcp_servers.github]
+    command = "npx"
+    args = ["-y", "@modelcontextprotocol/server-github"]
+    [mcp_servers.github.env]
+      GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+  [mcp_servers.sqlite]
+    command = "npx"
+    args = ["-y", "@modelcontextprotocol/server-sqlite", "/tmp/test.db"]
