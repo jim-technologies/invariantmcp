@@ -18,6 +18,9 @@ type Adapter interface {
 	Import(data []byte) (*UniversalConfig, error)
 	// Export translates the universal IR into the client's native format.
 	Export(config *UniversalConfig) ([]byte, error)
+	// Merge updates an existing native config with the provided IR while preserving
+	// unrelated target fields. Server IDs from source replace matching target IDs.
+	Merge(existing []byte, source *UniversalConfig) ([]byte, int, error)
 }
 
 var adapters []Adapter

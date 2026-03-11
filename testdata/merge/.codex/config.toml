@@ -1,0 +1,13 @@
+[model]
+  provider = "openai"
+  model = "gpt-5"
+
+[mcp_servers]
+  [mcp_servers.github]
+    command = "old-github"
+    args = ["--stale"]
+    env_vars = ["SHOULD_BE_REPLACED"]
+  [mcp_servers.redis]
+    command = "docker"
+    args = ["run", "--rm", "redis:7"]
+    env_vars = ["REDIS_URL"]

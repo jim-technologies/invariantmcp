@@ -1,0 +1,17 @@
+[mcp_servers]
+  [mcp_servers.github]
+    args = ["-y", "@modelcontextprotocol/server-github"]
+    command = "npx"
+    [mcp_servers.github.env]
+      GITHUB_PERSONAL_ACCESS_TOKEN = "ghp_xxx"
+  [mcp_servers.redis]
+    args = ["run", "--rm", "redis:7"]
+    command = "docker"
+    env_vars = ["REDIS_URL"]
+  [mcp_servers.sqlite]
+    args = ["-y", "@modelcontextprotocol/server-sqlite", "/tmp/test.db"]
+    command = "npx"
+
+[model]
+  model = "gpt-5"
+  provider = "openai"

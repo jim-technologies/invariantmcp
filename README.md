@@ -29,7 +29,7 @@ The client format is inferred from the file path. `mcp.json` means Cursor, `clau
 source file ── parse ── IR (Go struct) ── serialize ── target file
 ```
 
-> **Note:** Convert overwrites the target file.
+> **Note:** If the target file already exists, Convert merges by server ID. Target-only servers are preserved, source servers replace target servers with the same ID, and unrelated target config fields are kept.
 
 ## Install
 

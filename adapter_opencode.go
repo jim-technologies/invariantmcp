@@ -87,6 +87,50 @@ func (a *opencodeAdapter) Export(config *UniversalConfig) ([]byte, error) {
 	return json.MarshalIndent(oc, "", "  ")
 }
 
+func (a *opencodeAdapter) Merge(existing []byte, source *UniversalConfig) ([]byte, int, error) {
+	cleaned := stripJSONCComments(existing)
+	var root map[string]json.RawMessage
+	if err := json.Unmarshal(cleaned, &root); err != nil {
+		return nil, 0, fmt.Errorf("parse opencode config: %w", err)
+	}
+	servers := make(map[string]json.RawMessage)
+	if raw, ok := root["mcp"]; ok {
+		if err := json.Unmarshal(raw, &servers); err != nil {
+			return nil, 0, fmt.Errorf("parse opencode mcp: %w", err)
+		}
+	}
+	enabled := true
+	for name, srv := range source.Servers {
+		entry := opencodeServer{
+			Environment: srv.Env,
+			Enabled:     &enabled,
+		}
+		if srv.Transport == "http" {
+			entry.Type = "remote"
+			entry.URL = srv.URL
+			entry.Headers = srv.Headers
+		} else {
+			entry.Type = "local"
+			entry.Command = append([]string{srv.Command}, srv.Args...)
+		}
+		rawEntry, err := json.Marshal(entry)
+		if err != nil {
+			return nil, 0, fmt.Errorf("encode opencode server %q: %w", name, err)
+		}
+		servers[name] = rawEntry
+	}
+	rawServers, err := json.Marshal(servers)
+	if err != nil {
+		return nil, 0, fmt.Errorf("encode opencode mcp: %w", err)
+	}
+	root["mcp"] = rawServers
+	out, err := json.MarshalIndent(root, "", "  ")
+	if err != nil {
+		return nil, 0, fmt.Errorf("encode opencode config: %w", err)
+	}
+	return out, len(servers), nil
+}
+
 // stripJSONCComments removes // line comments and /* block comments */ from JSONC.
 func stripJSONCComments(data []byte) []byte {
 	out := make([]byte, 0, len(data))

@@ -104,6 +104,82 @@ func TestConvertUnknownPath(t *testing.T) {
 	}
 }
 
+func TestConvertMergesExistingTarget(t *testing.T) {
+	svc := &ConfigService{}
+	inPath := filepath.Join("testdata", "cursor", "mcp.json")
+	outDir := t.TempDir()
+	outPath := filepath.Join(outDir, ".codex", "config.toml")
+
+	existingBytes, err := os.ReadFile(filepath.Join("testdata", "merge", ".codex", "config.toml"))
+	if err != nil {
+		t.Fatalf("read existing target fixture: %v", err)
+	}
+	if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {
+		t.Fatalf("create output dir: %v", err)
+	}
+	if err := os.WriteFile(outPath, existingBytes, 0o644); err != nil {
+		t.Fatalf("write existing target fixture: %v", err)
+	}
+
+	resp, err := svc.Convert(context.Background(), &pb.ConvertRequest{
+		In:  inPath,
+		Out: outPath,
+	})
+	if err != nil {
+		t.Fatalf("Convert() error: %v", err)
+	}
+	if resp.ServerCount != 3 {
+		t.Fatalf("Convert() server count = %d, want 3", resp.ServerCount)
+	}
+
+	got, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read merged output: %v", err)
+	}
+	want, err := os.ReadFile(filepath.Join("testdata", "merge", ".codex", "merged_config.toml"))
+	if err != nil {
+		t.Fatalf("read expected merged output: %v", err)
+	}
+	if strings.TrimSpace(string(got)) != strings.TrimSpace(string(want)) {
+		t.Fatalf("merged output mismatch\ngot:\n%s\nwant:\n%s", got, want)
+	}
+}
+
+func TestConvertPreservesUnrelatedTargetFields(t *testing.T) {
+	svc := &ConfigService{}
+	inPath := filepath.Join("testdata", "cursor", "mcp.json")
+	outDir := t.TempDir()
+	outPath := filepath.Join(outDir, "opencode.json")
+
+	existingBytes, err := os.ReadFile(filepath.Join("testdata", "merge", "opencode.json"))
+	if err != nil {
+		t.Fatalf("read existing opencode fixture: %v", err)
+	}
+	if err := os.WriteFile(outPath, existingBytes, 0o644); err != nil {
+		t.Fatalf("write existing opencode fixture: %v", err)
+	}
+
+	_, err = svc.Convert(context.Background(), &pb.ConvertRequest{
+		In:  inPath,
+		Out: outPath,
+	})
+	if err != nil {
+		t.Fatalf("Convert() error: %v", err)
+	}
+
+	got, err := os.ReadFile(outPath)
+	if err != nil {
+		t.Fatalf("read merged opencode output: %v", err)
+	}
+	want, err := os.ReadFile(filepath.Join("testdata", "merge", "merged_opencode.json"))
+	if err != nil {
+		t.Fatalf("read expected merged opencode output: %v", err)
+	}
+	if strings.TrimSpace(string(got)) != strings.TrimSpace(string(want)) {
+		t.Fatalf("merged opencode output mismatch\ngot:\n%s\nwant:\n%s", got, want)
+	}
+}
+
 func TestAdapterForPath(t *testing.T) {
 	tests := []struct {
 		path string

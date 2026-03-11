@@ -73,9 +73,9 @@ func (a *clineAdapter) Export(config *UniversalConfig) ([]byte, error) {
 	cc := clineConfig{MCPServers: make(map[string]clineServer)}
 	for name, srv := range config.Servers {
 		cs := clineServer{
-			Command: srv.Command,
-			Args:    srv.Args,
-			Env:     srv.Env,
+			Command:  srv.Command,
+			Args:     srv.Args,
+			Env:      srv.Env,
 			Disabled: srv.Disabled,
 		}
 		if srv.Transport == "http" {
@@ -88,4 +88,49 @@ func (a *clineAdapter) Export(config *UniversalConfig) ([]byte, error) {
 		cc.MCPServers[name] = cs
 	}
 	return json.MarshalIndent(cc, "", "  ")
+}
+
+func (a *clineAdapter) Merge(existing []byte, source *UniversalConfig) ([]byte, int, error) {
+	var root map[string]json.RawMessage
+	if err := json.Unmarshal(existing, &root); err != nil {
+		return nil, 0, fmt.Errorf("parse cline config: %w", err)
+	}
+	servers := make(map[string]json.RawMessage)
+	if raw, ok := root["mcpServers"]; ok {
+		if err := json.Unmarshal(raw, &servers); err != nil {
+			return nil, 0, fmt.Errorf("parse cline mcpServers: %w", err)
+		}
+	}
+	for name, srv := range source.Servers {
+		entry, err := json.Marshal(clineServer{
+			Command:       srv.Command,
+			Args:          srv.Args,
+			Env:           srv.Env,
+			URL:           srv.URL,
+			Headers:       srv.Headers,
+			TransportType: clineTransportType(srv.Transport),
+			Disabled:      srv.Disabled,
+		})
+		if err != nil {
+			return nil, 0, fmt.Errorf("encode cline server %q: %w", name, err)
+		}
+		servers[name] = entry
+	}
+	rawServers, err := json.Marshal(servers)
+	if err != nil {
+		return nil, 0, fmt.Errorf("encode cline mcpServers: %w", err)
+	}
+	root["mcpServers"] = rawServers
+	out, err := json.MarshalIndent(root, "", "  ")
+	if err != nil {
+		return nil, 0, fmt.Errorf("encode cline config: %w", err)
+	}
+	return out, len(servers), nil
+}
+
+func clineTransportType(transport string) string {
+	if transport == "http" {
+		return "sse"
+	}
+	return "stdio"
 }

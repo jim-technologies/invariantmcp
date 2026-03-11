@@ -1,0 +1,18 @@
+{
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": ["old-github", "--stale"],
+      "enabled": true
+    },
+    "legacy": {
+      "type": "local",
+      "command": ["legacy-server"],
+      "enabled": false
+    }
+  },
+  "theme": "solarized",
+  "telemetry": {
+    "enabled": false
+  }
+}

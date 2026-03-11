@@ -35,9 +35,9 @@ func (s *ConfigService) Convert(_ context.Context, req *pb.ConvertRequest) (*pb.
 		return nil, fmt.Errorf("parse %s: %w", from.ID(), err)
 	}
 
-	out, err := to.Export(cfg)
+	out, count, err := exportOrMergeTarget(outPath, to, cfg)
 	if err != nil {
-		return nil, fmt.Errorf("export %s: %w", to.ID(), err)
+		return nil, err
 	}
 
 	if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {
@@ -47,11 +47,10 @@ func (s *ConfigService) Convert(_ context.Context, req *pb.ConvertRequest) (*pb.
 		return nil, fmt.Errorf("write %s: %w", outPath, err)
 	}
 
-	count := len(cfg.Servers)
 	return &pb.ConvertResponse{
 		ServerCount: int32(count),
 		Path:        outPath,
-		Message:     fmt.Sprintf("converted %d servers from %s to %s (%s)", count, from.ID(), to.ID(), outPath),
+		Message:     fmt.Sprintf("wrote %d merged servers from %s to %s (%s)", count, from.ID(), to.ID(), outPath),
 	}, nil
 }
 
@@ -61,4 +60,23 @@ func expandHome(path string) string {
 		return filepath.Join(home, path[2:])
 	}
 	return path
+}
+
+func exportOrMergeTarget(path string, adapter Adapter, source *UniversalConfig) ([]byte, int, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			out, err := adapter.Export(source)
+			if err != nil {
+				return nil, 0, fmt.Errorf("export %s: %w", adapter.ID(), err)
+			}
+			return out, len(source.Servers), nil
+		}
+		return nil, 0, fmt.Errorf("read %s: %w", path, err)
+	}
+	out, count, err := adapter.Merge(data, source)
+	if err != nil {
+		return nil, 0, fmt.Errorf("merge existing %s target: %w", adapter.ID(), err)
+	}
+	return out, count, nil
 }
