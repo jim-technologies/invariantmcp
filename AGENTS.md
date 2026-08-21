@@ -98,7 +98,8 @@ make serve-cli   # Run as CLI
 
 `make validate` is the gate — the one gate verb every public repository in this
 organisation shares. Here it routes to `lint` and `test`; both still work on
-their own for a narrower run.
+their own for a narrower run. The shared verbs and the rules behind them are in
+[`MAKEFILE-CONTRACT.md`](MAKEFILE-CONTRACT.md).
 
 `make lint` runs `make public-surface` first, and a finding there stops the
 build. `scripts/public-surface-check` scans the content of every tracked file,
