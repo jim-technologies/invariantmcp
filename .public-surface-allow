@@ -1,0 +1,27 @@
+# .public-surface-allow - justified exceptions to scripts/public-surface-check.
+#
+#     category | path-glob | reason | pattern
+#
+#   category    a deny category (see `scripts/public-surface-check --help`) or
+#               `*` for every category
+#   path-glob   `*` for the whole repository, a glob over the repository
+#               relative path, or `COMMIT` for commit-message exceptions
+#   reason      required, at least 8 characters: why the text is legitimately
+#               public, not what the pattern does
+#   pattern     POSIX ERE, with %HH hex escapes so a term can be named without
+#               being spelled
+#
+# This repository needs no exceptions today, and that is worth recording,
+# because an earlier audit floated two candidates that turn out not to need a
+# rule. Do not add one for them:
+#
+#   * the `ghp_xxx` placeholders in README.md and testdata/. A provider token
+#     is only reported with a full-length body after the prefix, so an obvious
+#     placeholder in a config example is not a finding.
+#   * the `/home/user/...` paths in service_test.go. A home directory is not a
+#     deny category; only private hosts, cluster shapes and secret stores are.
+#
+# Both stay quiet because the deny patterns are narrow, not because anything
+# excuses them. Widening the allowlist to cover them would switch off a check
+# that is currently doing its job. Add a rule only for text this guard actually
+# reports, and say in the reason why publishing it is intended.

@@ -90,10 +90,20 @@ If a new client has a field that doesn't fit, add it as a typed field to `Server
 make generate    # Regenerate proto stubs + descriptor
 make build       # Build binary
 make test        # Run tests
-make lint        # Lint proto + Go
+make lint        # Public-surface guard, then lint proto + Go
 make serve-mcp   # Run as MCP server
 make serve-cli   # Run as CLI
 ```
+
+`make lint` runs `make public-surface` first, and a finding there stops the
+build. `scripts/public-surface-check` scans the content of every tracked file,
+every tracked path, and the commit messages a push would publish, and fails on
+private repository names, internal infrastructure, first-party codenames,
+cluster shapes, credential shapes, secret stores and private remotes;
+`scripts/public-surface-check-test` then proves the guard still works. The
+script is identical in every public repository in the organisation, so never
+edit it — justified exceptions go in `.public-surface-allow` at the repo root,
+one line each as `category | path-glob | reason | pattern`.
 
 ## Do not
 
