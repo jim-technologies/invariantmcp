@@ -1,0 +1,36 @@
+schema-version = "1.12.0"
+
+[install]
+# Flox supplies the portable bootstrap binary; Go's checksum-verified
+# toolchain selector below provides the patched release declared by go.mod.
+go.pkg-path = "go"
+go.version = "1.26.4"
+
+# The proto slice of the gate is `buf lint`. Pinning it keeps a catalog bump
+# from changing what lint accepts between a developer machine and CI. It sits
+# in its own group because its catalog page does not carry the pinned Go.
+buf = { pkg-path = "buf", version = "1.72.0", pkg-group = "buf" }
+
+# The gate's own tooling lives in Flox as well, so `make validate` runs the
+# same binaries here and in CI instead of inheriting them from the host. The
+# public-surface guard is POSIX sh and needs git, awk, tr, sed and grep.
+gnumake = { pkg-path = "gnumake", pkg-group = "repo-tools" }
+git = { pkg-path = "git", pkg-group = "repo-tools" }
+coreutils = { pkg-path = "coreutils", pkg-group = "repo-tools" }
+gawk = { pkg-path = "gawk", pkg-group = "repo-tools" }
+gnused = { pkg-path = "gnused", pkg-group = "repo-tools" }
+gnugrep = { pkg-path = "gnugrep", pkg-group = "repo-tools" }
+
+[vars]
+GOTOOLCHAIN = "go1.26.6+auto"
+GOFLAGS = "-mod=readonly"
+GOENV = "off"
+
+[options]
+# The catalog has no x86_64-darwin build of buf 1.72.0, so the environment
+# resolves for the systems the rest of the fleet supports.
+systems = [
+  "aarch64-darwin",
+  "aarch64-linux",
+  "x86_64-linux",
+]
