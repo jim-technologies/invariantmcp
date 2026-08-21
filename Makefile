@@ -1,4 +1,4 @@
-.PHONY: generate descriptor serve-mcp serve-cli test clean lint public-surface fmt build
+.PHONY: validate generate descriptor serve-mcp serve-cli test clean lint public-surface fmt build
 
 generate:
 	cd proto && buf generate
@@ -6,6 +6,10 @@ generate:
 
 descriptor:
 	cd proto && buf build -o ../descriptor.binpb
+
+# The gate. `make validate` is the one gate verb in every public repository in
+# this organisation; here it routes to `lint` and `test`, this repo's full gate.
+validate: lint test
 
 lint: public-surface
 	cd proto && buf lint

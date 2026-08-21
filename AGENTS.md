@@ -87,6 +87,7 @@ If a new client has a field that doesn't fit, add it as a typed field to `Server
 ## Build commands
 
 ```
+make validate    # The gate: lint + test
 make generate    # Regenerate proto stubs + descriptor
 make build       # Build binary
 make test        # Run tests
@@ -94,6 +95,10 @@ make lint        # Public-surface guard, then lint proto + Go
 make serve-mcp   # Run as MCP server
 make serve-cli   # Run as CLI
 ```
+
+`make validate` is the gate — the one gate verb every public repository in this
+organisation shares. Here it routes to `lint` and `test`; both still work on
+their own for a narrower run.
 
 `make lint` runs `make public-surface` first, and a finding there stops the
 build. `scripts/public-surface-check` scans the content of every tracked file,
