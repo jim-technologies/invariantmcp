@@ -40,7 +40,7 @@
     "vars": {
       "GOENV": "off",
       "GOFLAGS": "-mod=readonly",
-      "GOTOOLCHAIN": "go1.26.6+auto"
+      "GOTOOLCHAIN": "go1.26.7+auto"
     },
     "options": {
       "systems": [

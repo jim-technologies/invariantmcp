@@ -22,7 +22,7 @@ gnused = { pkg-path = "gnused", pkg-group = "repo-tools" }
 gnugrep = { pkg-path = "gnugrep", pkg-group = "repo-tools" }
 
 [vars]
-GOTOOLCHAIN = "go1.26.6+auto"
+GOTOOLCHAIN = "go1.26.7+auto"
 GOFLAGS = "-mod=readonly"
 GOENV = "off"
 
