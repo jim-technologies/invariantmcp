@@ -20,6 +20,10 @@
         "pkg-path": "git",
         "pkg-group": "repo-tools"
       },
+      "gitleaks": {
+        "pkg-path": "gitleaks",
+        "pkg-group": "repo-audit"
+      },
       "gnugrep": {
         "pkg-path": "gnugrep",
         "pkg-group": "repo-tools"
@@ -35,12 +39,26 @@
       "go": {
         "pkg-path": "go",
         "version": "1.26.4"
+      },
+      "govulncheck": {
+        "pkg-path": "govulncheck",
+        "pkg-group": "repo-audit"
+      },
+      "protoc-gen-go": {
+        "pkg-path": "protoc-gen-go",
+        "pkg-group": "proto-go",
+        "version": "1.36.12"
+      },
+      "protoc-gen-go-grpc": {
+        "pkg-path": "protoc-gen-go-grpc",
+        "pkg-group": "proto-grpc",
+        "version": "1.6.2"
       }
     },
     "vars": {
       "GOENV": "off",
       "GOFLAGS": "-mod=readonly",
-      "GOTOOLCHAIN": "go1.26.7+auto"
+      "GOTOOLCHAIN": "go1.27.2+auto"
     },
     "options": {
       "systems": [
@@ -136,6 +154,180 @@
       },
       "system": "x86_64-linux",
       "group": "buf",
+      "priority": 5
+    },
+    {
+      "attr_path": "protoc-gen-go",
+      "broken": false,
+      "derivation": "/nix/store/0rbkkbhp60gjwxkysib4wvp3n23cgdgp-protoc-gen-go-1.36.12.drv",
+      "description": "Go support for Google's protocol buffers",
+      "install_id": "protoc-gen-go",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "protoc-gen-go-1.36.12",
+      "pname": "protoc-gen-go",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:01:18.670887Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.36.12",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/pfcqb99ryyygq1d9n0swknss7i4qqk59-protoc-gen-go-1.36.12"
+      },
+      "system": "aarch64-darwin",
+      "group": "proto-go",
+      "priority": 5
+    },
+    {
+      "attr_path": "protoc-gen-go",
+      "broken": false,
+      "derivation": "/nix/store/rda75k5spzkvfx2mjn6p1rma5bhm41cc-protoc-gen-go-1.36.12.drv",
+      "description": "Go support for Google's protocol buffers",
+      "install_id": "protoc-gen-go",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "protoc-gen-go-1.36.12",
+      "pname": "protoc-gen-go",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:35:19.637373Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.36.12",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/vc0w4gkyllgdzz3kfcgslqswf7p5pj6r-protoc-gen-go-1.36.12"
+      },
+      "system": "aarch64-linux",
+      "group": "proto-go",
+      "priority": 5
+    },
+    {
+      "attr_path": "protoc-gen-go",
+      "broken": false,
+      "derivation": "/nix/store/5spmk72qhsd2vd8kxdsnjish0g1m310s-protoc-gen-go-1.36.12.drv",
+      "description": "Go support for Google's protocol buffers",
+      "install_id": "protoc-gen-go",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "protoc-gen-go-1.36.12",
+      "pname": "protoc-gen-go",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T06:12:39.283294Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.36.12",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/ynildqwainvx2a11pf7yyqf2cknzhk52-protoc-gen-go-1.36.12"
+      },
+      "system": "x86_64-linux",
+      "group": "proto-go",
+      "priority": 5
+    },
+    {
+      "attr_path": "protoc-gen-go-grpc",
+      "broken": false,
+      "derivation": "/nix/store/in22xbxhmcc56d2bvgmwim8x6cl5q0ax-protoc-gen-go-grpc-1.6.2.drv",
+      "description": "Go language implementation of gRPC. HTTP/2 based RPC",
+      "install_id": "protoc-gen-go-grpc",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "protoc-gen-go-grpc-1.6.2",
+      "pname": "protoc-gen-go-grpc",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:01:18.672592Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.6.2",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/95hkzj7ijqc2a995h4xkpqmvxd6ccn44-protoc-gen-go-grpc-1.6.2"
+      },
+      "system": "aarch64-darwin",
+      "group": "proto-grpc",
+      "priority": 5
+    },
+    {
+      "attr_path": "protoc-gen-go-grpc",
+      "broken": false,
+      "derivation": "/nix/store/258v2ray8kk3kz0kdilmj5lwj44k6mk8-protoc-gen-go-grpc-1.6.2.drv",
+      "description": "Go language implementation of gRPC. HTTP/2 based RPC",
+      "install_id": "protoc-gen-go-grpc",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "protoc-gen-go-grpc-1.6.2",
+      "pname": "protoc-gen-go-grpc",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:35:19.639498Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.6.2",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/xywdy1n5n6jad13b03d340m0qmhr0ksp-protoc-gen-go-grpc-1.6.2"
+      },
+      "system": "aarch64-linux",
+      "group": "proto-grpc",
+      "priority": 5
+    },
+    {
+      "attr_path": "protoc-gen-go-grpc",
+      "broken": false,
+      "derivation": "/nix/store/g3hdq761qyb8xx3rshwdpj28bhf3nisk-protoc-gen-go-grpc-1.6.2.drv",
+      "description": "Go language implementation of gRPC. HTTP/2 based RPC",
+      "install_id": "protoc-gen-go-grpc",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "protoc-gen-go-grpc-1.6.2",
+      "pname": "protoc-gen-go-grpc",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T06:12:39.285391Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.6.2",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/5sqvscf8yfhmvzbygc2vvy6i34sczsm0-protoc-gen-go-grpc-1.6.2"
+      },
+      "system": "x86_64-linux",
+      "group": "proto-grpc",
       "priority": 5
     },
     {
@@ -811,6 +1003,180 @@
       },
       "system": "x86_64-linux",
       "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "gitleaks",
+      "broken": false,
+      "derivation": "/nix/store/69q87sqzmryz9qplx5hdkzzi5clmrwhz-gitleaks-8.30.1.drv",
+      "description": "Scan git repos (or files) for secrets",
+      "install_id": "gitleaks",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "gitleaks-8.30.1",
+      "pname": "gitleaks",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:00:38.533109Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "8.30.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/xya9ah03l0j4q2z2263iaxxvwmk3vmm5-gitleaks-8.30.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "repo-audit",
+      "priority": 5
+    },
+    {
+      "attr_path": "gitleaks",
+      "broken": false,
+      "derivation": "/nix/store/9ca849nzng556847avxp7isnbvyzi34l-gitleaks-8.30.1.drv",
+      "description": "Scan git repos (or files) for secrets",
+      "install_id": "gitleaks",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "gitleaks-8.30.1",
+      "pname": "gitleaks",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:34:21.815534Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "8.30.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/m3k662p6dnspmyxyr7w330xrv71yc9qh-gitleaks-8.30.1"
+      },
+      "system": "aarch64-linux",
+      "group": "repo-audit",
+      "priority": 5
+    },
+    {
+      "attr_path": "gitleaks",
+      "broken": false,
+      "derivation": "/nix/store/m4i747l946dnj3sybmaz01mr6bf4vz93-gitleaks-8.30.1.drv",
+      "description": "Scan git repos (or files) for secrets",
+      "install_id": "gitleaks",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "gitleaks-8.30.1",
+      "pname": "gitleaks",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T06:11:37.816909Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "8.30.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/3k6vzgl1czix6ml8kkwwn1w7sd9v5nzf-gitleaks-8.30.1"
+      },
+      "system": "x86_64-linux",
+      "group": "repo-audit",
+      "priority": 5
+    },
+    {
+      "attr_path": "govulncheck",
+      "broken": false,
+      "derivation": "/nix/store/g5c9bslmnrgs83z63fkqg3zbjd9is36n-govulncheck-1.8.0.drv",
+      "description": "Database client and tools for the Go vulnerability database, also known as vuln",
+      "install_id": "govulncheck",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "govulncheck-1.8.0",
+      "pname": "govulncheck",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:00:38.762584Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/8h2vdyj7gnpnx0wibi59i4n8j5dw0mla-govulncheck-1.8.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "repo-audit",
+      "priority": 5
+    },
+    {
+      "attr_path": "govulncheck",
+      "broken": false,
+      "derivation": "/nix/store/myz0y49r78vya4h6wpmm9c0ldvp89sd6-govulncheck-1.8.0.drv",
+      "description": "Database client and tools for the Go vulnerability database, also known as vuln",
+      "install_id": "govulncheck",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "govulncheck-1.8.0",
+      "pname": "govulncheck",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T05:34:22.813092Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/9nm0bzwb9vr7mg966jqj2lz6k8j82b0q-govulncheck-1.8.0"
+      },
+      "system": "aarch64-linux",
+      "group": "repo-audit",
+      "priority": 5
+    },
+    {
+      "attr_path": "govulncheck",
+      "broken": false,
+      "derivation": "/nix/store/rmwzpx278wgp173rdfrm6zl9kw720jr4-govulncheck-1.8.0.drv",
+      "description": "Database client and tools for the Go vulnerability database, also known as vuln",
+      "install_id": "govulncheck",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "name": "govulncheck-1.8.0",
+      "pname": "govulncheck",
+      "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+      "rev_count": 1087755,
+      "rev_date": "2026-10-08T10:40:40Z",
+      "scrape_date": "2026-10-09T06:11:38.876211Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/9jbh8q27fl90281r4l3prpjvjy5ylqj0-govulncheck-1.8.0"
+      },
+      "system": "x86_64-linux",
+      "group": "repo-audit",
       "priority": 5
     }
   ]

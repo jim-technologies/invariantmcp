@@ -10,6 +10,10 @@ go.version = "1.26.4"
 # from changing what lint accepts between a developer machine and CI. It sits
 # in its own group because its catalog page does not carry the pinned Go.
 buf = { pkg-path = "buf", version = "1.72.0", pkg-group = "buf" }
+protoc-gen-go = { pkg-path = "protoc-gen-go", version = "1.36.12", pkg-group = "proto-go" }
+protoc-gen-go-grpc = { pkg-path = "protoc-gen-go-grpc", version = "1.6.2", pkg-group = "proto-grpc" }
+govulncheck = { pkg-path = "govulncheck", pkg-group = "repo-audit" }
+gitleaks = { pkg-path = "gitleaks", pkg-group = "repo-audit" }
 
 # The gate's own tooling lives in Flox as well, so `make validate` runs the
 # same binaries here and in CI instead of inheriting them from the host. The
@@ -22,7 +26,7 @@ gnused = { pkg-path = "gnused", pkg-group = "repo-tools" }
 gnugrep = { pkg-path = "gnugrep", pkg-group = "repo-tools" }
 
 [vars]
-GOTOOLCHAIN = "go1.26.7+auto"
+GOTOOLCHAIN = "go1.27.2+auto"
 GOFLAGS = "-mod=readonly"
 GOENV = "off"
 

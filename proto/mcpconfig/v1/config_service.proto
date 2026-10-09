@@ -10,7 +10,6 @@ option go_package = "github.com/jim-technologies/invariantmcp/mcpconfig/v1;mcpco
 // Codex (TOML), and OpenCode (JSONC) formats. The client format is
 // inferred from the file path.
 service ConfigService {
-
   // Convert MCP server configurations from one AI client format to another.
   //
   // Reads the source config file, detects the format from the file path,
@@ -23,6 +22,7 @@ service ConfigService {
   rpc Convert(ConvertRequest) returns (ConvertResponse);
 }
 
+// ConvertRequest selects a source and target configuration file.
 message ConvertRequest {
   // Source config file path. Format is inferred from the path.
   string in = 1;
@@ -31,6 +31,7 @@ message ConvertRequest {
   string out = 2;
 }
 
+// ConvertResponse records the completed conversion and merged server count.
 message ConvertResponse {
   // Number of servers converted.
   int32 server_count = 1;

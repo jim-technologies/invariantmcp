@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+scripts/public-surface-check
+go mod verify
+govulncheck ./...
+gitleaks git --redact --no-banner

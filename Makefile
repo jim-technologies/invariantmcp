@@ -1,15 +1,22 @@
-.PHONY: validate generate descriptor serve-mcp serve-cli test clean lint public-surface fmt build help help-all
+.DEFAULT_GOAL := help
+.PHONY: validate audit generate verify-generate descriptor serve-mcp serve-cli test clean lint public-surface fmt build help help-all
 
 generate: ## Regenerate protobuf code and descriptor.binpb from proto/
-	cd proto && buf generate
 	cd proto && buf build -o ../descriptor.binpb
+	cd proto && buf generate ../descriptor.binpb
 
 descriptor: ## Rebuild descriptor.binpb only (no code generation)
 	cd proto && buf build -o ../descriptor.binpb
 
 # The gate. `make validate` is the one gate verb in every public repository in
 # this organisation; here it routes to `lint` and `test`, this repo's full gate.
-validate: lint test ## The full offline gate (lint + test)
+validate: lint test verify-generate ## The full offline gate (lint + test + generation check)
+
+audit: ## Check public surface, module integrity, vulnerabilities and secrets
+	scripts/audit
+
+verify-generate: ## Verify bindings and runtime descriptor match the authored proto
+	scripts/verify-generate
 
 lint: public-surface ## Public-surface guard, buf lint, go vet
 	cd proto && buf lint
