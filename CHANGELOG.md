@@ -11,6 +11,9 @@
   default Make target.
 - Generate bindings from the runtime descriptor without managed-option drift,
   check freshness in the ordinary gate, and add a secretless weekly audit.
+- Flox now supplies Go 1.27.2 itself (`go_1_27`). Removed the
+  `GOTOOLCHAIN=go1.27.2+auto` variable, which downloaded that toolchain at run
+  time on top of a Flox Go 1.26.4 bootstrap.
 
 The conversion request/response fields and configuration formats are unchanged.
 Reverting the source and dependency commit restores the previous toolchain.

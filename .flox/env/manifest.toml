@@ -1,10 +1,10 @@
 schema-version = "1.12.0"
 
 [install]
-# Flox supplies the portable bootstrap binary; Go's checksum-verified
-# toolchain selector below provides the patched release declared by go.mod.
-go.pkg-path = "go"
-go.version = "1.26.4"
+# Flox supplies the exact patched Go release the gate builds with, so nothing
+# downloads a toolchain at run time. It sits in its own group because the
+# catalog's 1.27 line is a separate package from the bootstrap `go`.
+go = { pkg-path = "go_1_27", version = "1.27.2", pkg-group = "go" }
 
 # The proto slice of the gate is `buf lint`. Pinning it keeps a catalog bump
 # from changing what lint accepts between a developer machine and CI. It sits
@@ -26,7 +26,6 @@ gnused = { pkg-path = "gnused", pkg-group = "repo-tools" }
 gnugrep = { pkg-path = "gnugrep", pkg-group = "repo-tools" }
 
 [vars]
-GOTOOLCHAIN = "go1.27.2+auto"
 GOFLAGS = "-mod=readonly"
 GOENV = "off"
 
