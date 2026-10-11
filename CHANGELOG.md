@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v0.1.0 — 2026-10-11
+
+First tagged release; `VERSION` records it and the README installs it.
+
 - Upgrade `golang.org/x/net` to 0.60.0 to fix the reachable HTTP/2
   vulnerabilities found by the October 9 audit.
 - Use the root Invariant Protocol v0.16.7 module and generated service

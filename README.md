@@ -34,7 +34,7 @@ source file ── parse ── IR (Go struct) ── serialize ── target fi
 ## Install
 
 ```bash
-go install github.com/jim-technologies/invariantmcp@latest
+go install github.com/jim-technologies/invariantmcp@v0.1.0
 ```
 
 Or build from source:
@@ -44,6 +44,9 @@ git clone https://github.com/jim-technologies/invariantmcp.git
 cd invariantmcp
 make build
 ```
+
+Releases are plain `vX.Y.Z` tags on the repository root; `VERSION` holds the
+current release and `CHANGELOG.md` lists what each one changed.
 
 ## Usage
 
